@@ -18,9 +18,6 @@ def first_window():
     image_path = tkinter.PhotoImage(file="./Backgroung.png")
     bg_image = tkinter.Label(app, image=image_path)
     bg_image.pack()
-    # image_background = ImageTk.PhotoImage(Image.open("background.jpg", "r"))
-    # l1 = customtkinter.CTkLabel(master=app, image=image_background)
-    # l1.pack()
     ########################################
     # now we gona do a frame
 
