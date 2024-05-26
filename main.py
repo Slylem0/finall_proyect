@@ -1,32 +1,24 @@
 import tkinter 
-from tkinter import ttk
+import customtkinter 
+from PIL import ImageTk, Image
 
-archivo = open("C:/Users/pnico/Documents/Finall_proyect/finall_proyect/Datos_Vuelos _Finales.txt", "r")
+def first_window():
+    #The apparence of the window set to black
+    customtkinter.set_appearance_mode ("system")
+    customtkinter.set_default_color_theme ("green")
 
+    app = customtkinter.CTk()
+    app.title("My App")
+    app.geometry("800x600")
 
-window = tkinter.Tk()
-window.title("Airline check-in system")
-frame = tkinter.Frame(window)
-frame.pack()
+    #The background image is set
+    image_background = ImageTk.PhotoImage(Image.open("background.jpg", "r"))
+    l1 = customtkinter.CTkLabel(master=app, image=image_background)
+    l1.pack()
 
-#getting de information of the user
-
-get_data_of_fly = tkinter.LabelFrame(frame, text="Get data of fly")
-get_data_of_fly.grid(row = 0, column = 2, padx = 20, pady = 20)
-
-informatio1 = tkinter.Label(get_data_of_fly, text="Solo ida")
-informatio1.grid (row = 0, column = 0) 
-
-space = tkinter.Label(get_data_of_fly, text=" Holaaaa")
-space.grid (row = 0, column = 1)
-information2 = tkinter.Label (get_data_of_fly, text="Ocuppants")
-information2.grid(row = 0, column = 2)
-
-ocuppants_combobox = tkinter.Spinbox(get_data_of_fly, from_ = 1, to = 72)
-ocuppants_combobox.grid(row = 1, column = 2)
+    app.mainloop()
 
 
-
-
-window.mainloop()
+if __name__ == "__main__":
+    first_window()
 
