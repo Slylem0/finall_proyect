@@ -40,7 +40,7 @@ def button2_click():
 
     customtkinter.CTkLabel(master=frame, text="Origin", font=("Century Gothic", 15)).place(x=10, y=10)
     customtkinter.CTkLabel(master=frame, text="Origen", font=("Century Gothic", 15)).place(x=10, y=50)
-    with open(fr"C:\Users\pnico\Documents\Finall_proyect\finall_proyect\Datos_Vuelos _Finales.txt", "r") as archivo:
+    with open(fr"C:\Users\pnico\Downloads\Datos_Vuelos _Finales.txt", "r") as archivo:
         datos = archivo.readlines()
 
     lista_limpia = []
@@ -155,6 +155,27 @@ def first_window():
 
     button2 = customtkinter.CTkButton(master=frame, width=220, text = "Buy a ticket", corner_radius=6, command=button2_click)
     button2.place(x=50, y=250)
+
+    app.mainloop()
+    app.geometry("600x500")
+
+    # The background image is set
+    ########################################
+    image_path = tkinter.PhotoImage(file="./Backgroung.png")
+    bg_image = tkinter.Label(app, image=image_path)
+    bg_image.pack()
+    ########################################
+    # now we gona do a frame
+
+    frame = customtkinter.CTkFrame(app)
+    frame.place(relx=0.5, rely=0.5, anchor="center")
+
+    # now we goona do the options for the user
+
+    option1 = customtkinter.CTkLabel(master=frame,
+                                     text="Welcome, pls select an option",
+                                     font=("Century Gothic", 15))
+    option1.place(x=10, y=45)
 
     app.mainloop()
 
