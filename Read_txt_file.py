@@ -1,4 +1,3 @@
-from tabulate import tabulate
 
 # Reading the txt and organazing it as a list
 with open("Datos_Vuelos_Finales.txt", "r") as archivo:
