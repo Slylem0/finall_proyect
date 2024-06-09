@@ -1,5 +1,6 @@
 from tabulate import tabulate
 
+# Reading the txt and organazing it as a list
 with open("Datos_Vuelos_Finales.txt", "r") as archivo:
     datos = archivo.readlines()
 
@@ -12,10 +13,28 @@ place_from = []
 for i in lista_limpia:
     place_from.append(i[7])
 
-to_arrive = []
+arrive_to = []
 for i in lista_limpia:
-    to_arrive.append(i[8])
+    arrive_to.append(i[8])
 
-print(tabulate(lista_limpia))
-print(tabulate(place_from))
-print(tabulate(to_arrive))
+# print(tabulate(lista_limpia))
+# print(place_from)
+# print(tabulate(arrive_to))
+
+
+# Functions to find the flight that satisfy the requirements
+def search_flight(where_from):
+    counter = 0
+    ubi_flight = []
+    go_to = []
+    for i in place_from:
+        if where_from == i:
+            ubi_flight.append(counter)
+        counter += 1
+    for i in ubi_flight:
+        go_to.append(lista_limpia[i][1]+", "
+                     + lista_limpia[i][8].strip("\n"))
+    return go_to
+
+
+print(search_flight("Cali"))
