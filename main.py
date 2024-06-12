@@ -105,8 +105,10 @@ def button2_click():
     drop3 = OptionMenu(frame, date_variable, *date)
     drop3.place(x=10, y=220)
 
-    age_label = tkinter.Label(master=frame, text="users", font=("Century Gothic", 15))
-    age_spinbox = tkinter.Spinbox(master=frame, from_=1, to=72, font=("Century Gothic", 15))
+    age_label = tkinter.Label(master=frame, text="users",
+                              font=("Century Gothic", 15))
+    age_spinbox = tkinter.Spinbox(master=frame, from_=1,
+                                  to=72, font=("Century Gothic", 15))
     age_label.place(x=250, y=20)
     age_spinbox.place(x=250, y=80)
 

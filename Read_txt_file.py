@@ -16,9 +16,7 @@ arrive_to = []
 for i in lista_limpia:
     arrive_to.append(i[8])
 
-# print(tabulate(lista_limpia))
-# print(place_from)
-# print(tabulate(arrive_to))
+print(lista_limpia)
 
 
 # Functions to find the flight that satisfy the requirements
