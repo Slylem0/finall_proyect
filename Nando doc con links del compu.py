@@ -7,13 +7,16 @@ import tkinter.messagebox as messagebox
 import random
 
 
-def Ticket():
+def ticketfinal():
+    global first
+    global names
+    first = ""
 
     with open("Codigos_Vuelos.txt", "a") as archivo:
 
         window9 = customtkinter.CTk()
         window9.title("Ticket")
-        window9.geometry("600x440")
+        window9.geometry("250x100")
         window9.resizable(False, False)
         alfabhet = ["A", "B", "C", "D", "E", "F",
                     "G", "H", "I", "J", "K", "L",
@@ -21,11 +24,13 @@ def Ticket():
                     "S", "T", "U", "V", "W", "X", "Y", "Z"]
         numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
-        first = random.choice(alfabhet)
+        for i in alfabhet:
+            if i == names[0][0]:
+                first += i
         first += "-"
 
-        frame = customtkinter.CTkFrame(master=window9, width=500,
-                                       height=450, corner_radius=15)
+        frame = customtkinter.CTkFrame(master=window9, width=230,
+                                       height=80, corner_radius=15)
         frame.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
         for i in range(1, 4):
@@ -38,9 +43,9 @@ def Ticket():
         archivo.close()
 
         customtkinter.CTkLabel(master=frame, text="Ticket", font=(
-            "Century Gothic", 15)).place(x=300, y=100)
+            "Century Gothic", 18)).place(x=10, y=5)
         customtkinter.CTkLabel(master=frame, text=f"{first}", font=(
-            "Century Gothic", 15)).place(x=300, y=150)
+            "Century Gothic", 15)).place(x=10, y=35)
 
         window9.mainloop()
 
@@ -54,28 +59,34 @@ def comprobate_payment(card_number, cvv, window6):
     if len(card_number) == 16:
         # Directly check the length of the CVV
         if len(cvv) == 3:
-            customtkinter.CTkLabel(
-                master=window6, text="The payment was successful",
-                font=("Century Gothic", 16)).place(x=270, y=140)
-            Ticket()
+            messagebox.showinfo(
+                title="Payment", message="The payment was successful")
+            ticketfinal()
         else:
-            customtkinter.CTkLabel(
-                master=window6, text="The CVV is incorrect",
-                font=("Century Gothic", 16)).place(x=270, y=140)
+            messagebox.showerror(
+                title="CVV Error", message="The CVV is incorrect")
     else:
-        customtkinter.CTkLabel(
-            master=window6, text="The card number is incorrect",
-            font=("Century Gothic", 16)).place(x=270, y=140)
+        messagebox.showerror(
+            title="Card Number Error", message="The card number is incorrect")
 
     window6.mainloop()
 
 
 def card_payment():
+    global ubi_data
     try:
         window6 = customtkinter.CTk()
         window6.title("Payment")
         window6.geometry("600x440")
         window6.resizable(False, False)
+
+        def price_for_the_flight():
+            if kinda == "Aluminium":
+                return lista_limpia[ubi_data][4]
+            if kinda == "Diamond":
+                return lista_limpia[ubi_data][5]
+            if kinda == "Premium":
+                return lista_limpia[ubi_data][6]
 
         frame = customtkinter.CTkFrame(master=window6, width=500,
                                        height=450, corner_radius=15)
@@ -116,7 +127,13 @@ def card_payment():
         customtkinter.CTkButton(
             master=frame, text="Pay", corner_radius=6,
             command=lambda: comprobate_payment(
-                card_number, cvv, window6)).place(x=250, y=200)
+                card_number, cvv, window6)).place(x=10, y=250)
+
+        customtkinter.CTkLabel(
+            master=frame, text="Total to pay:\nCOP $" +
+            price_for_the_flight(),
+            font=("Century Gothic", 15), bg_color="gray",
+            text_color="black", corner_radius=10).place(x=300, y=245)
 
         window6.mainloop()
     except Exception as e:
@@ -133,20 +150,30 @@ def comprobate_user(first_name, last_name, email, phone, window5):
 
     names = [first_name, last_name]
 
+    phone_contador = 0
     contador = 0
-    for i in correo:
-        if i == "@":
-            contador += 1
-        elif contador == 1 and i == ".":
-            contador += 1
-    if contador == 2:
-        if len(phone) == 10:
-            card_payment()
-        else:
-            customtkinter.CTkLabel(
-                master=window5, text="Phone number is incorrect",
-                font=("Century Gothic", 10)).place(x=250, y=10)
-            window5.mainloop()
+    try:
+        for i in correo:
+            if i == "@":
+                contador += 1
+            elif contador == 1 and i == ".":
+                contador += 1
+            elif contador >= 2 and i == ".":
+                contador += 1
+        if contador == 2:
+            if isinstance(int(phone), int):
+                phone_contador += 1
+            if len(phone) == 10 and phone_contador == 1:
+                card_payment()
+        elif contador < 2 or contador > 2:
+            messagebox.showerror(
+                title="Email Error",
+                message=("Your email is not valid" +
+                         "\nWrite just one @ for the email" +
+                         "\nWrite just one dot after @"))
+    except Exception:
+        messagebox.showerror(title="Phone Number Error",
+                             message="Phone number is incorrect")
 
     window5.mainloop()
 
@@ -208,7 +235,7 @@ def _get_data():
         font=("Century Gothic", 15)).place(x=10, y=300)
     asistence_fly = customtkinter.CTkEntry(
         master=frame, width=150, font=("Century Gothic", 15))
-    asistence_fly.place(x=10, y=350)
+    asistence_fly.place(x=10, y=330)
 
     customtkinter.CTkLabel(
         master=frame, text="Email",
@@ -228,11 +255,14 @@ def _get_data():
         master=frame, text="Buy",
         corner_radius=6, command=lambda: comprobate_user(
             first_name, last_name, email, phone, window5)).place(x=350, y=410)
+
     window5.mainloop()
 
 
 def buy_ticket(category):
     global final_seat
+    global kinda
+    kinda = category
     category = category
 
     window4 = customtkinter.CTk()
@@ -267,23 +297,25 @@ def buy_ticket(category):
 
     customtkinter.CTkLabel(
         master=window4, text="Seat",
-        font=("Century Gothic", 15)).place(x=10, y=100)
+        font=("Century Gothic", 15), bg_color="white",
+        text_color="black", corner_radius=10).place(x=10, y=100)
 
     customtkinter.CTkButton(
         master=window4, text="Select",
-        corner_radius=6, command=_get_data).place(x=10, y=300)
+        corner_radius=6, command=_get_data,
+        width=120).place(x=5, y=300)
 
     if category == "Aluminium":
         customtkinter.CTkLabel(
             master=window4, text="Your Seat is Aleatory",
-            font=("Century Gothic", 13)).place(x=5, y=150)
+            font=("Century Gothic", 13)).place(x=10, y=150)
         column = ["A", "B", "C", "D", "E", "F"]
-        b = {column[random.randint(0, 5)]}
+        b = column[random.randint(0, 5)]
         a = random.randint(1, 12)
-        seat = f"{b}-{a}"
+        seat = f"{b} - {a}"
         final_seat = customtkinter.CTkLabel(
             master=window4, text=f"{seat}",
-            font=("Century Gothic", 12)).place(x=5, y=200)
+            font=("Century Gothic", 12)).place(x=15, y=200)
 
     elif category == "Diamond":
         customtkinter.CTkLabel(
@@ -296,7 +328,7 @@ def buy_ticket(category):
             font=("Century Gothic", 12)).place(x=5, y=200)
 
         customtkinter.CTkEntry(
-            master=window4, width=150,
+            master=window4, width=80,
             font=("Century Gothic", 15)).place(x=10, y=250)
 
     elif category == "Premium":
@@ -304,12 +336,13 @@ def buy_ticket(category):
             master=window4, text="You can select the seat",
             font=("Century Gothic", 10)).place(x=5, y=150)
         final_seat = customtkinter.CTkEntry(
-            master=window4, width=150,
+            master=window4, width=80,
             font=("Century Gothic", 15)).place(x=10, y=200)
 
     customtkinter.CTkButton(
         master=window4, text="Buy",
-        corner_radius=6, command=_get_data).place(x=10, y=300)
+        corner_radius=6, command=_get_data,
+        width=120).place(x=5, y=300)
 
     window4.mainloop()
 
@@ -367,6 +400,7 @@ def botton2_click():
     window2.title("Buy a ticket")
     window2.geometry("600x500")
     window2.resizable(False, False)
+    global lista_limpia
 
     frame = customtkinter.CTkFrame(master=window2, width=475,
                                    height=450, corner_radius=15)
@@ -553,6 +587,7 @@ def botton2_click():
     Refund (Not allowed)"""))
 
     def buying_options():
+        global ubi_data
         if repeated_final:
             for item in lst_trips.curselection():
                 info = (lst_trips.get(item).replace(" ", "").replace("\n", "")
