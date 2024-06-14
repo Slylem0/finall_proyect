@@ -315,18 +315,26 @@ def buy_ticket(category):
 
 
 def comprube_data(code, window3):
-    with open("Codigos_Vuelos.txt", "w") as archivo:
-        for i in archivo:
-            if i == code:
+    with open("Codigos_Vuelos.txt", "r") as archivo:
+        tckets = []
+        counter = 0
+        for line in archivo:
+            tckets.append(line.strip())
+        print(tckets)
+        for i in range(len(tckets)):
+            counter += 1
+            if tckets[i] == code:
                 customtkinter.CTkLabel(
                     master=window3,
-                    text="The code is correct, You have done Check-in",
-                    font=("Century Gothic", 16)).place(x=270, y=140)
-            else:
+                    text="The code is correct,"
+                    "\nYou have done the Check-in",
+                    font=("Century Gothic", 16)).place(x=180, y=100)
+                counter -= 1
+            elif counter == len(tckets):
                 customtkinter.CTkLabel(
                     master=window3,
                     text="The code is incorrect",
-                    font=("Century Gothic", 16)).place(x=270, y=140)
+                    font=("Century Gothic", 16)).place(x=215, y=140)
 
 
 def button1_click():
@@ -349,7 +357,8 @@ def button1_click():
 
     button4 = customtkinter.CTkButton(
         master=frame, text="Check",
-        corner_radius=6, command=lambda: [comprube_data(code.get(), window3)])
+        corner_radius=6, command=lambda: [comprube_data(code.get(),
+                                                        window3)])
     button4.place(x=150, y=300)
 
     window3.mainloop()
