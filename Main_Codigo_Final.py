@@ -1,3 +1,14 @@
+"""
+Integrante 1: Pablo Nicolas Marin-202459440
+Integrante 2: Daniel Antonio Hoyos-202459736
+Integrante 3: Juan Fernando Jimenez-202459394
+
+Docente: Luis German Toro Pareja
+Numero de grupo: ¿El mejor?
+Proyecto Final
+"""
+
+# Import all libraries we gonna use
 import tkinter
 import customtkinter
 from PIL import ImageTk, Image
@@ -7,6 +18,7 @@ import tkinter.messagebox as messagebox
 import random
 
 
+# Starting making the functions that we will use
 def boarding_pass():
     global names
     global ubi_data
