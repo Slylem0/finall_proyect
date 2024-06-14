@@ -7,8 +7,82 @@ import tkinter.messagebox as messagebox
 import random
 
 
+def boarding_pass():
+    global names
+    global ubi_data
+    global lista_limpia
+
+    window10 = customtkinter.CTk()
+    window10.title("Boarding Pass")
+    window10.geometry("700x300")
+    window10.resizable(False, False)
+    window10.config(bg="white")
+
+    frame = customtkinter.CTkFrame(master=window10, width=600,
+                                   height=60, fg_color="purple",
+                                   bg_color="blue")
+    frame.place(x=100, y=0)
+
+    frame2 = customtkinter.CTkFrame(master=window10, width=100,
+                                    height=300, fg_color="blue",
+                                    bg_color="purple")
+    frame2.place(x=0, y=0)
+
+    frame3 = customtkinter.CTkFrame(master=window10, width=600, height=240,
+                                    fg_color="white", bg_color="gray")
+    frame3.place(x=100, y=60)
+
+    customtkinter.CTkLabel(master=frame, text="Boarding Pass",
+                           text_color="white",
+                           font=("Century Gothic", 20)).place(x=300, y=30)
+
+    customtkinter.CTkLabel(
+        master=frame2, text=("A\n" + ("   "*5) + "S\n" +
+                             "L\n" + ("   "*5) + "E\n" +
+                             "L\n" + ("   "*5) + "N\n" +
+                             "I\n" + ("   "*5) + "I\n" +
+                             "V\n" + ("   "*5) + "L\n" +
+                             "A\n" + ("   "*5) + "R\n" +
+                             "R\n" + ("   "*5) + "I\n" +
+                             "A\n" + ("   "*5) + "A\n" +
+                             "M"), font=("Century Gothic", 12),
+        text_color="white").place(x=5, y=15)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("Passanger Name:  "+("  "*3) +
+              f"{names[0]} {names[1]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=10)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("Flying from:  "+("   "*6)+f"{lista_limpia[ubi_data][7]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=40)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("To:"+("  "*18)+f"{lista_limpia[ubi_data][8]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=70)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("Flight:  "+("  "*14)+f"{lista_limpia[ubi_data][0]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=100)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("Departure date:  "+("  "*4)+f"{lista_limpia[ubi_data][1]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=130)
+
+    customtkinter.CTkLabel(
+        master=frame3,
+        text=("Departure time:  "+("  "*5)+f"{lista_limpia[ubi_data][2]}"),
+        font=("Century Gothic", 15), text_color="black").place(x=30, y=160)
+
+    window10.mainloop()
+
+
 def ticketfinal():
-    global first
     global names
     first = ""
 
@@ -132,8 +206,9 @@ def card_payment():
         customtkinter.CTkLabel(
             master=frame, text="Total to pay:\nCOP $" +
             price_for_the_flight(),
-            font=("Century Gothic", 15), bg_color="gray",
-            text_color="black", corner_radius=10).place(x=300, y=245)
+            font=("Century Gothic", 15, "bold"), bg_color="transparent",
+            text_color="black", corner_radius=10,
+            fg_color="gray").place(x=300, y=245)
 
         window6.mainloop()
     except Exception as e:
@@ -389,7 +464,8 @@ def button1_click():
 
     button4 = customtkinter.CTkButton(
         master=frame, text="Check",
-        corner_radius=6, command=lambda: [comprube_data(code.get())])
+        corner_radius=6, command=lambda: [comprube_data(code.get()),
+                                          boarding_pass()])
     button4.place(x=150, y=300)
 
     window3.mainloop()
@@ -468,7 +544,7 @@ def botton2_click():
     frame2 = customtkinter.CTkFrame(master=frame, width=450,
                                     height=110, corner_radius=15)
     frame2.place(x=10, y=120)
-    customtkinter.CTkLabel(master=frame2, text="Sort by:",
+    customtkinter.CTkLabel(master=frame2, text="Flights:",
                            font=("Century Gothic", 15)).place(x=10, y=10)
 
     lst_trips = Listbox(frame, width=68, height=3)
@@ -699,11 +775,11 @@ def first_window():
     # now we goona do the options for the user
 
     option1 = customtkinter.CTkLabel(master=frame,
-                                     text="Welcome please select an option",
+                                     text="MARAVILLA AIRLINES",
                                      font=("Century Gothic", 15),
                                      bg_color="lightgray", fg_color="gray",
                                      text_color="black")
-    option1.place(x=40, y=45)
+    option1.place(x=80, y=45)
     image1 = PhotoImage(file=("./images/Logo.png"))
     # ahora hacemos mas pequeña la imagen
     image1 = image1.subsample(6, 6)
@@ -739,7 +815,7 @@ def first_window():
     # now we goona do the options for the user
 
     option1 = customtkinter.CTkLabel(master=frame,
-                                     text="Welcome, please select an option",
+                                     text="Maravilla Airlines",
                                      font=("Century Gothic", 15))
     option1.place(x=40, y=45)
 
