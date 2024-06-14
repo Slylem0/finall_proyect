@@ -90,7 +90,7 @@ def card_payment():
         card_number.place(x=10, y=50)
 
         customtkinter.CTkLabel(
-            master=frame, text="Expiration Date", 
+            master=frame, text="Expiration Date",
             font=("Century Gothic", 15)).place(x=300, y=10)
         months = ["January", "February", "March", "April",
                   "May", "June", "July", "August",
@@ -107,7 +107,7 @@ def card_payment():
         drop2.place(x=500, y=50)
 
         customtkinter.CTkLabel(
-            master=frame, text="CVV", 
+            master=frame, text="CVV",
             font=("Century Gothic", 15)).place(x=10, y=100)
         cvv = customtkinter.CTkEntry(master=frame, width=150,
                                      font=("Century Gothic", 15))
