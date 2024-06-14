@@ -2,7 +2,7 @@ import tkinter
 import customtkinter
 from PIL import ImageTk, Image
 from tkinter import *
-from tkinter import OptionMenu, messagebox, Listbox, PhotoImage, StringVar
+from tkinter import OptionMenu, messagebox, Listbox, PhotoImage, StringVar, END
 import tkinter.messagebox as messagebox
 import random
 
